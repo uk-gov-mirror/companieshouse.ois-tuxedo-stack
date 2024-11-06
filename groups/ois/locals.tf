@@ -40,4 +40,14 @@ locals {
   kms_key_administrator_arns = concat(tolist(data.aws_iam_roles.sso_administrator.arns), [data.aws_iam_user.concourse.arn])
 
   logs_kms_key_id = data.vault_generic_secret.kms_keys.data["logs"]
+
+  chl_tuxedo_security_group_rules = flatten([
+    for service_name, port_number in var.tuxedo_services : [
+      for cidr_block in data.aws_subnet.application[*].cidr_block : {
+        service   = service_name
+        port      = port_number
+        cidr_ipv4 = cidr_block
+      }
+    ]
+  ])
 }
