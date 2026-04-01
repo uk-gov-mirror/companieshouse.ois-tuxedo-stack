@@ -40,5 +40,5 @@ tuxedo_log_groups = {
   ]
 }
 
-default_log_retention_in_days = 30
+default_log_retention_in_days = 90
 
